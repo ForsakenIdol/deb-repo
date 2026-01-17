@@ -41,11 +41,14 @@ gzip -c dists/stable/main/binary-all/Packages > dists/stable/main/binary-all/Pac
 cat << EOF > dists/stable/Release
 Origin: ForsakenIdol
 Label: Pathfinder Repo
+Suite: stable
 Codename: stable
 Architectures: all
 Components: main
 Description: Pathfinder APT Repository
 EOF
+
+cd dists/stable && apt-ftparchive release . >> Release
 ```
 
 - Notice that the `dpkg-scanpackages` command is run from the repository root directory.
@@ -58,9 +61,8 @@ Given the correct directory structure, we can host a simple repository with `pyt
 We then need to add the repository to Apt's source list. All files in the `/etc/apt/sources.list.d` are owned by `root`.
 
 ```sh
-sudo su
-echo "deb [trusted=yes] http://localhost:5000/ stable main" > /etc/apt/sources.list.d/forsakenidol.list
-exit
+sudo touch /etc/apt/sources.list.d/forsakenidol.list
+echo "deb [trusted=yes] http://localhost:5000/ stable main" | sudo tee /etc/apt/sources.list.d/forsakenidol.list > /dev/null
 sudo apt update
 apt-cache search pathfinder     # Look for: "pathfinder - PATH environment consolidation and enumeration"
 ```
