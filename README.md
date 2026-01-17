@@ -79,3 +79,24 @@ To clean up:
 ```sh
 sudo rm /etc/apt/sources.list.d/forsakenidol.list
 ```
+
+## Hosting the Repository (Azure)
+
+The Terraform scripts in this repository under `terraform/azure` are responsible for setting up the Azure blob storage container and adjacent utilities to host the Debian repository remotely on Microsoft Azure. The `terraform/` directory and the `README.md` top-level markdown file are not synced to Azure when using the `azcopy` command-line utility.
+
+TODO:
+
+- Set up Terraform and azurerm providers
+- Set up a backend (probably azure blob storage in its own resource group, created **before** configuring it as the terraform backend)
+- Use Terraform to set up the Azure blob storage container and all other adjacent required components
+    - I might just choose to import the resource group used for the backend so I create the other blob storage container in the same resource group
+
+It might be easier to just run `terraform plan` and `terraform apply` locally for the actual infrastructure to avoid having to set up federated Azure credentials for now; these can be added later with the following TODO tasks.
+
+- Set up Azure authentication identities to be used with GitHub Actions
+- Set up a GitHub Actions pipeline to validate, plan, and apply changes on push to the master branch
+- (remember to run `terraform fmt` locally before pushing)
+
+Then again, I might need those credentials anyway for the next few tasks.
+
+- Configure `azcopy` syncing pipeline for this repo, excluding the `terraform/` directory and `README.md` scripts
