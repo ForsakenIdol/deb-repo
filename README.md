@@ -32,7 +32,7 @@ repository-root
 
 Creating the repository from scratch, from the repository's root directory, for the `pathfinder` package:
 
-```
+```sh
 mkdir -p ./{dists/stable/main/binary-all,pool/main/p/pathfinder}
 cp /path/to/pathfinder_0.1.0-1_all.deb pool/main/p/pathfinder/
 dpkg-scanpackages pool/ 2>/dev/null > dists/stable/main/binary-all/Packages
@@ -53,4 +53,22 @@ EOF
 
 ## Hosting the Repository (Locally)
 
+Given the correct directory structure, we can host a simple repository with `python3 -m http.server 5000` in the repository's top-level directory.
 
+We then need to add the repository to Apt's source list. All files in the `/etc/apt/sources.list.d` are owned by `root`.
+
+```sh
+sudo su
+echo "deb [trusted=yes] http://localhost:5000/ stable main" > /etc/apt/sources.list.d/forsakenidol.list
+exit
+sudo apt update
+apt-cache search pathfinder     # Look for: "pathfinder - PATH environment consolidation and enumeration"
+```
+
+You can then test installation and removal of the `pathfinder` package.
+
+To clean up:
+
+```sh
+sudo rm /etc/apt/sources.list.d/forsakenidol.list
+```
