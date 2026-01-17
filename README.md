@@ -28,6 +28,8 @@ repository-root
                 └── package_version_arch.deb        # The actual package users will install
 ```
 
+This structure omits GPG key signing, requiring end users to explicitly trust the Apt repository when using it.
+
 ## Creating the Repository
 
 The following steps create the Apt repository structure from scratch for the `pathfinder` package. Start at the root directory of the Git repository.
