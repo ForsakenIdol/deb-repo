@@ -26,5 +26,5 @@ jobs:
             - name: Validate configuration
               run: terraform validate
 
-            # - name: Plan infrastructure
-            #   run: terraform plan
+            - name: Plan infrastructure
+              run: terraform plan
