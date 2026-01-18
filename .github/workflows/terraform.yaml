@@ -1,4 +1,4 @@
-name: sync-apt-repository
+name: terraform
 on:
     push:
         branches:
@@ -10,6 +10,9 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v6
 
+            - name: Enter the Terraform script directory
+              run: cd terraform
+
             - name: Authenticate to HCP Terraform
               uses: hashicorp/setup-terraform@v3
               with:
@@ -18,11 +21,9 @@ jobs:
                 cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
             - name: Initialize terraform
-              working-directory: terraform
               run: terraform init -input=false
 
             - name: Validate and plan
-              working-directory: terraform
               run: |
                 terraform validate
                 terraform plan
