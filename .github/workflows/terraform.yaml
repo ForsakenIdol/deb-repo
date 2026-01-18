@@ -20,6 +20,14 @@ jobs:
                 cli_config_credentials_hostname: "app.terraform.io"
                 cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+            - name: Show Terraform CLI config
+              run: |
+                ls -R ~
+                echo "Trying ~/.terraform.d/credentials.tfrc.json"
+                cat ~/.terraform.d/credentials.tfrc.json || echo "no credentials.tfrc.json"
+                echo "Trying ~/.terraformrc"
+                cat ~/.terraformrc || echo "no .terraformrc"
+                
             - name: Initialize terraform
               run: |
                 pwd
