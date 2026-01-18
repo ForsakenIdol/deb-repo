@@ -10,6 +10,8 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v6
 
+            - run: cd terraform
+
             - name: Authenticate to HCP Terraform
               uses: hashicorp/setup-terraform@v3
               with:
@@ -19,7 +21,6 @@ jobs:
 
             - name: Initialize terraform
               run: |
-                cd terraform
                 terraform init -input=false
 
             - name: Validate configuration
@@ -28,6 +29,6 @@ jobs:
 
             - name: Plan infrastructure
               run: |
+                cd terraform
                 pwd
-                ls
                 terraform plan
