@@ -88,7 +88,11 @@ TODO:
 
 It might be easier to just run `terraform plan` and `terraform apply` locally for the actual infrastructure to avoid having to set up federated Azure credentials for now; these can be added later with the following TODO tasks.
 
-- Set up Azure authentication identities to be used with GitHub Actions
+- (In Progress) Set up Azure authentication identities to be used with GitHub Actions - [Instructions](https://github.com/marketplace/actions/azure-login?version=v2.3.0#login-with-openid-connect-oidc-recommended)
+    - Using a [user-assigned managed identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/manage-user-assigned-managed-identities-azure-portal?pivots=identity-mi-methods-azp#create-a-user-assigned-managed-identity)
+    - Configuring a [federated identity credential on the user-assigned managed identity](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp#configure-a-federated-identity-credential-on-a-user-assigned-managed-identity)
+        - The Organization for me is just `ForsakenIdol` since I created the repo in my account
+
 - Set up a GitHub Actions pipeline to validate, plan, and apply changes on push to the master branch
 - (remember to run `terraform fmt` locally before pushing)
 
