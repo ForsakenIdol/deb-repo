@@ -6,6 +6,8 @@ on:
 jobs:
     check-terraform-config:
         runs-on: ubuntu-22.04
+        permissions:
+          id-token: write # This is required to allow this workflow to request the JWT from GitHub's OIDC provider
         defaults:
             run:
                 working-directory: terraform
