@@ -84,7 +84,7 @@ TODO:
 - (Done) ~~Set up Terraform and azurerm providers~~
 - (Done) ~~Set up a backend (Terraform Cloud: app.terraform.io)~~
 - Use Terraform to set up the Azure blob storage container and all other adjacent required components
-    - I might just choose to import the resource group used for the backend so I create the other blob storage container in the same resource group
+    - The blob storage container needs to be created in a resource group, remember that!
 
 It might be easier to just run `terraform plan` and `terraform apply` locally for the actual infrastructure to avoid having to set up federated Azure credentials for now; these can be added later with the following TODO tasks.
 

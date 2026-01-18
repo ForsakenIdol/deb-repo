@@ -14,6 +14,7 @@ echo "Checking for required tools..."
 for cmd in "dpkg-scanpackages" "gzip" "apt-ftparchive"; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "[Error] $cmd is missing from shell."
+        exit 1
     else
         echo "\"$cmd\" is present in shell."
     fi
