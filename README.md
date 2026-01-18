@@ -86,8 +86,8 @@ The Terraform scripts in this repository under `terraform/azure` are responsible
 
 TODO:
 
-- Set up Terraform and azurerm providers
-- Set up a backend (probably azure blob storage in its own resource group, created **before** configuring it as the terraform backend)
+- (Done) ~~Set up Terraform and azurerm providers~~
+- (Done) ~~Set up a backend (Terraform Cloud: app.terraform.io)~~
 - Use Terraform to set up the Azure blob storage container and all other adjacent required components
     - I might just choose to import the resource group used for the backend so I create the other blob storage container in the same resource group
 
