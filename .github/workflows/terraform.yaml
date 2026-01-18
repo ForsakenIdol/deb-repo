@@ -6,11 +6,12 @@ on:
 jobs:
     check-terraform-config:
         runs-on: ubuntu-22.04
+        defaults:
+            run:
+                working-directory: terraform
         steps:
             - name: Checkout repository
               uses: actions/checkout@v6
-
-            - run: cd terraform
 
             - name: Authenticate to HCP Terraform
               uses: hashicorp/setup-terraform@v3
@@ -20,17 +21,16 @@ jobs:
                 cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
             - name: Initialize terraform
-              working-directory: terraform
               run: |
+                pwd
                 terraform init -input=false
 
             - name: Validate configuration
-              working-directory: terraform
               run: |
+                pwd
                 terraform validate
 
             - name: Plan infrastructure
-              working-directory: terraform
               run: |
                 pwd
                 terraform plan
