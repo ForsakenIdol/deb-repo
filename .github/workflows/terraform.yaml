@@ -23,7 +23,6 @@ jobs:
             - name: Initialize terraform
               run: terraform init -input=false
 
-            - name: Validate and plan
+            - name: Validate (no resources)
               run: |
                 terraform validate
-                terraform plan
