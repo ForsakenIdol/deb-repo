@@ -92,6 +92,7 @@ It might be easier to just run `terraform plan` and `terraform apply` locally fo
     - Using a [user-assigned managed identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/manage-user-assigned-managed-identities-azure-portal?pivots=identity-mi-methods-azp#create-a-user-assigned-managed-identity)
     - Configuring a [federated identity credential on the user-assigned managed identity](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp#configure-a-federated-identity-credential-on-a-user-assigned-managed-identity)
         - The Organization for me is just `ForsakenIdol` since I created the repo in my account
+    - The identity needs a **role assignment** to have permission to do things
 
 - Set up a GitHub Actions pipeline to validate, plan, and apply changes on push to the master branch
 - (remember to run `terraform fmt` locally before pushing)
