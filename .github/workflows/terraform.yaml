@@ -1,0 +1,27 @@
+name: sync-apt-repository
+on:
+    push:
+        branches:
+            - master
+jobs:
+    check-terraform-config:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v6
+
+            - name: Authenticate to HCP Terraform
+              uses: hashicorp/setup-terraform@v3
+              with:
+                    terraform_version: "1.14.3"
+                    cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+            - name: Initialize terraform
+              working-directory: terraform
+              run: terraform init -input=false
+
+            - name: Validate and plan
+              working-directory: terraform
+              run: |
+                terraform validate
+                terraform plan
