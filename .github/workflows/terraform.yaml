@@ -28,4 +28,7 @@ jobs:
                 terraform validate
 
             - name: Plan infrastructure
-              run: terraform plan
+              run: |
+                pwd
+                ls
+                terraform plan
