@@ -37,23 +37,14 @@ The following steps create the Apt repository structure from scratch for the `pa
 ```sh
 PATHFINDER_DEB_PATH=~/Documents/pathfinder/pathfinder_0.1.0-1_all.deb
 
+# Prepare the package pool
 mkdir forsakenidol && cd forsakenidol
-mkdir -p ./{dists/stable/main/binary-all,pool/main/p/pathfinder}
+mkdir -p ./pool/main/p/pathfinder
 cp $PATHFINDER_DEB_PATH pool/main/p/pathfinder/
-dpkg-scanpackages pool/ 2>/dev/null > dists/stable/main/binary-all/Packages
-gzip -c dists/stable/main/binary-all/Packages > dists/stable/main/binary-all/Packages.gz
 
-cat << EOF > dists/stable/Release
-Origin: ForsakenIdol
-Label: Pathfinder Repo
-Suite: stable
-Codename: stable
-Architectures: all
-Components: main
-Description: Pathfinder APT Repository
-EOF
-
-cd dists/stable && apt-ftparchive release . >> Release
+# The following script should not be called locally. A pipeline should call this on merges to the master branch.
+# Use the package pool to populate dist/ folder metadata
+../populate-dist.sh
 ```
 
 - Notice that the `dpkg-scanpackages` command is run from the repository root directory.
@@ -81,6 +72,10 @@ sudo rm /etc/apt/sources.list.d/forsakenidol.list
 ```
 
 ## Hosting the Repository (Azure)
+
+**Note:** We will no-longer generate the repository's `dist/` folder locally or keep it up to date. This folder should be treated as dynamic and should be generated immediately before syncing the directory structure to the upstream Apt repository. Therefore, on every push or commit to `master`:
+1. A GitHub Actions workflow will call `populate-dish.sh` to create the `dists/` folder containing package info. The `dists/` package data directory will no-longer be put under source control because its contents are dynamic.
+2. The same workflow will then call `azcopy` to sync the `master` branch's `forsakenidol/` directory (containing `dist/` and `pool/`) and the `index.html` file to the upstream Apt repository.
 
 The Terraform scripts in this repository under `terraform/azure` are responsible for setting up the Azure blob storage container and adjacent utilities to host the Debian repository remotely on Microsoft Azure. The `terraform/` directory and the `README.md` top-level markdown file are not synced to Azure when using the `azcopy` command-line utility.
 
