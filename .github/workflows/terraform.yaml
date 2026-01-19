@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths:
-      - 'terraform/'
+      - 'terraform/**'
 
 permissions:
   id-token: write   # Required to allow workflow to request JWT from GitHub's OIDC provider
