@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-    check-terraform-config:
+    check-then-apply-terraform-config:
         runs-on: ubuntu-22.04
         defaults:
             run:
@@ -43,25 +43,14 @@ jobs:
 
             - name: Plan infrastructure
               run: terraform plan -out=tfplan
-            
-            - name: Upload terraform plan
-              uses: actions/upload-artifact@v6
+
+            - name: (Approval Gate) Deploy to production
+              uses: trstringer/manual-approval@v1.12.0
+              timeout-minutes: 5
               with:
-                name: tfplan
-                path: terraform/tfplan
-    
-    apply-terraform-config:
-      needs: check-terraform-config
-      runs-on: ubuntu-latest
-      environment: production
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v6
-
-        - name: Download terraform plan
-          uses: actions/download-artifact@v7
-          with:
-            name: tfplan
-
-        - name: Test terraform init in dependent job task
-          run: terraform init
+                secret: ${{ github.token }}
+                approvers: forsakenidol
+                minimum-approvals: 1
+            
+            - name: Indicate that approval was successful
+              run: echo "Previous workflow step was approved."
