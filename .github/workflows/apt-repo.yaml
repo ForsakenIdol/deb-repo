@@ -32,7 +32,6 @@ jobs:
 
             - name: Tar the deb repo structure
               run: |
-                mv ./index.html ./forsakenidol/
                 tree forsakenidol
                 tar -czf deb.tar.gz ./forsakenidol
             
@@ -57,7 +56,6 @@ jobs:
           run: |
             mkdir ./forsakenidol
             tar -xzf deb.tar.gz ./forsakenidol/
-            mv forsakenidol/index.html .
         
         - name: Delete archive and verify structure
           run: |
@@ -89,4 +87,4 @@ jobs:
             AZCOPY_AUTO_LOGIN_TYPE: AZCLI
             AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           run: |
-            azcopy sync . "$DESTINATION_URL" --recursive --delete-destination=true
+            azcopy sync ./forsakenidol/ "$DESTINATION_URL" --recursive --delete-destination=true
