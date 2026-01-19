@@ -1,13 +1,12 @@
 name: sync-apt-repository
 on:
-    workflow_run:
-      workflows: [ "sync-terraform-config" ]
-      types:
-        - completed
+  push:
+    branches:
+      - master
+
 jobs:
     generate-dist-and-archive-repo:
         runs-on: ubuntu-22.04
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v6
@@ -30,6 +29,7 @@ jobs:
             - name: Tar the deb repo structure
               run: |
                 pwd
+                ls -la
                 mv ./deb-repo/index.html ./deb-repo/forsakenidol/
                 tar -czf deb.tar.gz -C ./deb-repo/forsakenidol
             
