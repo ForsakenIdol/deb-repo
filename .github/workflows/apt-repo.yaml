@@ -77,8 +77,11 @@ jobs:
 
         - name: List storage accounts in Australia East
           run: |
-            STORAGEACCOUNTNAMES=$(az storage account list --query "[?location=='australiaeast'].name")
-            echo "$STORAGEACCOUNTNAMES"
-            az storage container list --account-name "$STORAGEACCOUNTNAMES[0]"
+            STORAGEACCOUNT=$(az storage account list --query "[?location=='australiaeast']" | jq -r ".[0]")
+            URL=$(echo "$STORAGEACCOUNT" | jq -r ".primaryEndpoints.blob")
+            ACCOUNTNAME=$(echo "$STORAGEACCOUNT" | jq -r ".name")
+            CONTAINERNAME=$(az storage container list --account-name "$ACCOUNTNAME" 2>/dev/null | jq -r ".[0].name")
+            echo "$URL$CONTAINERNAME"
 
           # TODO: Sync apt repository directory structure
+          # azcopy sync . "$URL$CONTAINERNAME" --recursive
