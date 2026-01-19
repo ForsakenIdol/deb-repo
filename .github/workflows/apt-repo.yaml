@@ -55,9 +55,10 @@ jobs:
             tar -xzf deb.tar.gz ./forsakenidol/
             mv forsakenidol/index.html .
         
-        - name: Verify resulting repo directory structure
+        - name: Delete archive and verify structure
           run: |
             pwd
+            rm dev.tar.gz
             tree
         
         # Next steps: Authenticate to Azure, check for and install azcopy (if required), sync directory structure
