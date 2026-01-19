@@ -84,5 +84,4 @@ jobs:
             echo "$URL$CONTAINERNAME"
 
         - name: Sync Apt repository
-          run: azcopy sync \'$(pwd)\' \'$(echo "$URL$CONTAINERNAME")\' --recursive --delete-destination
-
+          run: azcopy sync \'$(pwd)\' \'$(echo "$URL$CONTAINERNAME")\' --recursive --delete-destination=true
