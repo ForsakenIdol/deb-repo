@@ -43,3 +43,14 @@ jobs:
 
             - name: Plan infrastructure
               run: terraform plan
+    
+    apply-terraform-config:
+      needs: check-terraform-config
+      runs-on: ubuntu-latest
+      environment: production
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v6
+
+        - name: Test terraform init in dependent job task
+          run: terraform init
