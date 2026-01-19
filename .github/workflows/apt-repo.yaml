@@ -29,8 +29,9 @@ jobs:
 
             - name: Tar the deb repo structure
               run: |
-                mv index.html forsakenidol/
-                tar -czf deb.tar.gz
+                pwd
+                mv ./deb-repo/index.html ./deb-repo/forsakenidol/
+                tar -czf deb.tar.gz -C ./deb-repo/forsakenidol
             
             - name: Upload deb archive
               uses: actions/upload-artifact@v6
