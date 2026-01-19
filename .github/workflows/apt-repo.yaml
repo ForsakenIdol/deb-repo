@@ -75,4 +75,10 @@ jobs:
         - name: Check for azcopy command
           run: which azcopy
 
+        - name: List storage accounts in Australia East
+          run: |
+            STORAGEACCOUNTNAMES=$(az storage account list --query "[?location=='australiaeast'].name")
+            echo "$STORAGEACCOUNTNAMES"
+            az storage container list --account-name "$STORAGEACCOUNTNAMES[0]"
+
           # TODO: Sync apt repository directory structure
