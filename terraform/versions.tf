@@ -9,6 +9,7 @@ terraform {
   }
 
   backend "remote" {
+    hostname     = "app.terraform.io"
     organization = "forsakenidol-organization-1"
     workspaces {
       name = "deb-repo"

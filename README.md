@@ -89,9 +89,10 @@ TODO:
         - The Organization for me is just `ForsakenIdol` since I created the repo in my account
     - The identity needs a **role assignment** to have permission to do things
 
-- (In Progress) Set up a GitHub Actions pipeline to validate, plan, and apply changes on push to the master branch
+- (Done) Set up a GitHub Actions pipeline to validate, plan, and apply changes on push to the master branch
 - (remember to run `terraform fmt` locally before pushing)
 
-- Use Terraform to set up the Azure blob storage container and all other adjacent required components
+- (Done) Use Terraform to set up the Azure blob storage container and all other adjacent required components
     - The blob storage container needs to be created in a resource group, remember that!
-- Configure `azcopy` syncing pipeline for this repo, excluding the `terraform/` directory and `README.md` scripts
+- (Done) Configure `azcopy` syncing pipeline for the apt repo, excluding the `terraform/` directory and `README.md` scripts
+    - The repo directory is archived, uploaded as an artifact, then downloaded into another workflow
