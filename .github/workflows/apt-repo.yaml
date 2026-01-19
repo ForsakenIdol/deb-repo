@@ -61,4 +61,14 @@ jobs:
             rm deb.tar.gz
             tree
         
-        # Next steps: Authenticate to Azure, check for and install azcopy (if required), sync directory structure
+        - name: Authenticate to Azure
+          uses: azure/login@v2
+          with:
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+        - name: Check for azcopy command
+          run: which azcopy
+
+          # TODO: Sync apt repository directory structure
