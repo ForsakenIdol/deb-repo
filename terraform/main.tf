@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "apt_resources" {
 }
 
 resource "azurerm_storage_account" "apt_storage_account" {
-    name = "forsakenidoldebianstorageaccount"
+    name = "forsakenidoldebian"
     resource_group_name = azurerm_resource_group.apt_resources.name
     location = azurerm_resource_group.apt_resources.location
     account_tier = "Standard"
