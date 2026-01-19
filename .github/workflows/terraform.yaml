@@ -48,7 +48,7 @@ jobs:
               uses: actions/upload-artifact@v6
               with:
                 name: tfplan
-                path: tfplan
+                path: terraform/tfplan
     
     apply-terraform-config:
       needs: check-terraform-config
