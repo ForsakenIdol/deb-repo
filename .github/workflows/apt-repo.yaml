@@ -81,8 +81,8 @@ jobs:
             URL=$(echo "$STORAGEACCOUNT" | jq -r ".primaryEndpoints.blob")
             ACCOUNTNAME=$(echo "$STORAGEACCOUNT" | jq -r ".name")
             CONTAINERNAME=$(az storage container list --account-name "$ACCOUNTNAME" 2>/dev/null | jq -r ".[0].name")
-            echo "$URL$CONTAINERNAME"
+            echo "DESTINATION_URL=$URL$CONTAINERNAME" >> "$GITHUB_ENV"
 
         - name: Sync Apt repository
           run: |
-            azcopy sync . $URL$CONTAINERNAME --recursive --delete-destination=true
+            azcopy sync . "$DESTINATION_URL" --recursive --delete-destination=true
