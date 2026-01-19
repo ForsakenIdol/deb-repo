@@ -1,4 +1,4 @@
-name: terraform
+name: sync-terraform-config
 on:
   push:
     branches:
