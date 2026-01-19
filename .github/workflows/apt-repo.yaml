@@ -5,7 +5,7 @@ on:
       types:
         - completed
 jobs:
-    generate-dist-and-update-azure-package-repo:
+    generate-dist-and-archive-repo:
         runs-on: ubuntu-22.04
         if: ${{ github.event.workflow_run.conclusion == 'success' }}
         steps:
@@ -26,3 +26,38 @@ jobs:
               run: |
                 cd ..
                 tree
+
+            - name: Tar the deb repo structure
+              run: |
+                mv index.html forsakenidol/
+                tar -czf deb.tar.gz
+            
+            - name: Upload deb archive
+              uses: actions/upload-artifact@v6
+              with:
+                name: deb.tar.gz
+                path: deb.tar.gz
+
+    sync-repo-upstream:
+      needs: generate-dist-and-archive-repo
+      runs-on: ubuntu-latest
+      environment: production
+      steps:
+        # We don't have to checkout the repo for this stage; just download the archive structure
+        - name: Download deb archive
+          uses: actions/download-artifact@v7
+          with:
+            name: deb.tar.gz
+        
+        - name: Unpack deb archive
+          run: |
+            mkdir ./forsakenidol
+            tar -xzf deb.tar.gz -C ./forsakenidol/
+            mv forsakenidol/index.html .
+        
+        - name: Verify resulting repo directory structure
+          run: |
+            pwd
+            tree
+        
+        # Next steps: Authenticate to Azure, check for and install azcopy (if required), sync directory structure
