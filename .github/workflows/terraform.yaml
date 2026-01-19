@@ -42,7 +42,13 @@ jobs:
               run: az account show
 
             - name: Plan infrastructure
-              run: terraform plan
+              run: terraform plan -out=tfplan
+            
+            - name: Upload terraform plan
+              uses: actions/upload-artifact@v6
+              with:
+                name: tfplan
+                path: tfplan
     
     apply-terraform-config:
       needs: check-terraform-config
@@ -51,6 +57,11 @@ jobs:
       steps:
         - name: Checkout repository
           uses: actions/checkout@v6
+
+        - name: Download terraform plan
+          uses: actions/download-artifact@v7
+          with:
+            name: tfplan
 
         - name: Test terraform init in dependent job task
           run: terraform init
