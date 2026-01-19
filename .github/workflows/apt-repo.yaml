@@ -52,7 +52,7 @@ jobs:
         - name: Unpack deb archive
           run: |
             mkdir ./forsakenidol
-            tar -xzf deb.tar.gz -C ./forsakenidol/
+            tar -xzf deb.tar.gz ./forsakenidol/
             mv forsakenidol/index.html .
         
         - name: Verify resulting repo directory structure
