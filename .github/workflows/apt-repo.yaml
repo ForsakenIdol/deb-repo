@@ -87,6 +87,6 @@ jobs:
           # https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-configuration-settings
           env:
             AZCOPY_AUTO_LOGIN_TYPE: AZCLI
-            AZCOPY_TENANT_ID: AZURE_SUBSCRIPTION_ID
+            AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           run: |
             azcopy sync . "$DESTINATION_URL" --recursive --delete-destination=true
