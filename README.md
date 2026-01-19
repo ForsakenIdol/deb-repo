@@ -96,3 +96,11 @@ TODO:
     - The blob storage container needs to be created in a resource group, remember that!
 - (Done) Configure `azcopy` syncing pipeline for the apt repo, excluding the `terraform/` directory and `README.md` scripts
     - The repo directory is archived, uploaded as an artifact, then downloaded into another workflow
+
+Adding and removing the repo:
+
+```
+echo "deb [trusted=yes] https://forsakenidoldebian.blob.core.windows.net/debrepo/ stable main" | sudo tee /etc/apt/sources.list.d/forsakenidol.list > /dev/null
+
+sudo rm /etc/apt/sources.list.d/forsakenidol.list
+```
