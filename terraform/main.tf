@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "apt_resources" {
 }
 
 resource "azurerm_storage_account" "apt_storage_account" {
-  name                     = "forsakenidoldebian"
+  name                     = "forsakenidol"
   resource_group_name      = azurerm_resource_group.apt_resources.name
   location                 = azurerm_resource_group.apt_resources.location
   account_tier             = "Standard"
@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "apt_storage_account" {
 }
 
 resource "azurerm_storage_container" "apt_storage_container" {
-  name                  = "debrepo"
+  name                  = "deb"
   storage_account_id    = azurerm_storage_account.apt_storage_account.id
   container_access_type = "container"
 

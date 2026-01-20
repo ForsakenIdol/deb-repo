@@ -75,7 +75,7 @@ jobs:
 
         - name: List storage accounts in Australia East
           run: |
-            STORAGEACCOUNT=$(az storage account list --query "[?location=='australiaeast']" | jq -r ".[0]")
+            STORAGEACCOUNT=$(az storage account list --query "[?starts_with(name, 'forsakenidol')]" | jq -r ".[0]")
             URL=$(echo "$STORAGEACCOUNT" | jq -r ".primaryEndpoints.blob")
             ACCOUNTNAME=$(echo "$STORAGEACCOUNT" | jq -r ".name")
             CONTAINERNAME=$(az storage container list --account-name "$ACCOUNTNAME" 2>/dev/null | jq -r ".[0].name")
