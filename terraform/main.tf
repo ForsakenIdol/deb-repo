@@ -18,6 +18,11 @@ resource "azurerm_storage_container" "apt_storage_container" {
 
 }
 
+resource "azurerm_storage_account_static_website" "apt_static_website" {
+  storage_account_id    = azurerm_storage_account.apt_storage_account.id
+  index_document = "index.html"
+}
+
 output "apt_storage_account_id" {
   value = azurerm_storage_account.apt_storage_account.id
 }

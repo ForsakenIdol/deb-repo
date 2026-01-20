@@ -100,7 +100,7 @@ TODO:
 Adding and removing the repo:
 
 ```
-echo "deb [trusted=yes] https://forsakenidoldebian.blob.core.windows.net/debrepo/ stable main" | sudo tee /etc/apt/sources.list.d/forsakenidol.list > /dev/null
+echo "deb [trusted=yes] https://forsakenidol.blob.core.windows.net/deb stable main" | sudo tee /etc/apt/sources.list.d/forsakenidol.list > /dev/null
 
 sudo rm /etc/apt/sources.list.d/forsakenidol.list
 ```

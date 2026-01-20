@@ -76,15 +76,17 @@ jobs:
         - name: List storage accounts in Australia East
           run: |
             STORAGEACCOUNT=$(az storage account list --query "[?starts_with(name, 'forsakenidol')]" | jq -r ".[0]")
-            URL=$(echo "$STORAGEACCOUNT" | jq -r ".primaryEndpoints.blob")
+            STORAGE_ACCOUNT_URL=$(echo "$STORAGEACCOUNT" | jq -r ".primaryEndpoints.blob")
             ACCOUNTNAME=$(echo "$STORAGEACCOUNT" | jq -r ".name")
             CONTAINERNAME=$(az storage container list --account-name "$ACCOUNTNAME" 2>/dev/null | jq -r ".[0].name")
-            echo "DESTINATION_URL=$URL$CONTAINERNAME" >> "$GITHUB_ENV"
+            echo "STORAGE_ACCOUNT_URL=$STORAGE_ACCOUNT_URL" >> "$GITHUB_ENV"
+            echo "DESTINATION_URL=$STORAGE_ACCOUNT_URL$CONTAINERNAME" >> "$GITHUB_ENV"
 
-        - name: Sync Apt repository
+        - name: Sync Apt repository and static website endpoint
           # https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-configuration-settings
           env:
             AZCOPY_AUTO_LOGIN_TYPE: AZCLI
             AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           run: |
             azcopy sync ./forsakenidol/ "$DESTINATION_URL" --recursive --delete-destination=true
+            azcopy sync "$DESTINATION_URL/index.html" "$STORAGE_ACCOUNT_URL\$web/index.html" --delete-destination=true
